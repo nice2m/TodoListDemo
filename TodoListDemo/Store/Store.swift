@@ -8,17 +8,6 @@
 
 import Foundation
 
-/*
- 
- func updateViews(state: State, previousState: State?)
- 
- func reduce<Result>(_ initialResult: Result,
- _ nextPartialResult: (Result, Element) throws -> Result) rethrows -> Result
- 
- func reducer(state: State, userAction: Action) -> (State, Command?)
- 
- */
-
 typealias TodoObserver = (_ odlState:ViewControllerState?,_ newState:ViewControllerState) -> Void
 
 class TodoStore {

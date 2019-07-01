@@ -60,20 +60,6 @@ class ViewController: UIViewController {
         
     }
     
-    /*
-     
-     func updateViews(state: State, previousState: State?)
-     
-     
-     func reduce<Result>(_ initialResult: Result,
-     _ nextPartialResult: (Result, Element) throws -> Result) rethrows -> Result
-     
-     
-     
-     func reducer(state: State, userAction: Action) -> (State, Command?)
-     
-     */
-    
     func configCell(cell:TodoCell,indexPath:IndexPath) {
         guard let aState = controllerState else { return  }
         let todo = aState.todos[indexPath.row]
