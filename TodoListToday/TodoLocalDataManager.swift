@@ -10,11 +10,11 @@ import UIKit
 import SwiftyJSON
 import KeychainAccess
                           
-public let kAPPGroupID = "6F5SM484R5.group.TodoListDemo.com"
+public let kAPPGroupID = "group.TodoListDemo.com"
 //public let kAPPGroupID = "TodoListDemo.com"
 
-public let kAPPSyncDataPath = "Document/Cache"
-public let kAPPSyncDataFileName = "cache.data"
+public let kAPPSyncDataPath = "Library/Caches"
+public let kAPPSyncDataFileName = "cache_file"
 public let kAPPSyncDataUserDefaultsKey = "kAPPSyncDataUserDefaultsKey"
 public let kAPPSyncDataKeychainServiceKey = "kAPPSyncDataKeychainServiceKey"
 public let kAPPSyncDataKeychainPasswordKey = "kAPPSyncDataKeychainPasswordKey"
@@ -86,12 +86,17 @@ public class TodoLocalDataManager: NSObject {
             guard let file = cacheDataFileURL() else { return rt}
             let storeData = try! JSONSerialization.data(withJSONObject: dictArrayWithModelArray(data: data), options: JSONSerialization.WritingOptions.prettyPrinted)
             do {
+                
+                
+            
                 try storeData.write(to: file, options: Data.WritingOptions.atomic)
+                
                 rt = true
                 
             }
             catch{
                 rt = false
+                print("error:\(error)")
             }
         case .userDefaults:
             print("storeData-userDefaults")

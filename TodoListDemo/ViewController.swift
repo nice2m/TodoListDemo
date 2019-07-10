@@ -94,18 +94,20 @@ class ViewController: UIViewController {
         
         let tmpBtn = UIButton.init(type: .custom)
         tmpBtn.setImage(UIImage.init(named: "add_icon"), for: .normal)
-        tmpBtn .addTarget(self, action: #selector(rightBarbuttonClick(sender:)), for: .touchUpInside)
+        tmpBtn .addTarget(self, action: #selector(leftButtonClick(sender:)), for: .touchUpInside)
         tmpBtn.frame = CGRect.init(x: 0, y: 0, width: 44, height: 44)
-        tmpBtn.imageEdgeInsets = UIEdgeInsets.init(top: 12, left: 8, bottom: 8, right: 8)
-        rightBtn = UIBarButtonItem.init(customView: tmpBtn)
-        self.navigationItem.rightBarButtonItem = rightBtn;
+        tmpBtn.imageEdgeInsets = UIEdgeInsets.init(top: 12, left: 12, bottom: 12, right:12)
+        leftBtn = UIBarButtonItem.init(customView: tmpBtn)
+        self.navigationItem.leftBarButtonItem = leftBtn;
 
         let tmpBtnRight = UIButton.init(type: .custom)
         tmpBtnRight.setImage(UIImage.init(named: "ok_icon"), for: .normal)
         tmpBtnRight .addTarget(self, action: #selector(rightBarbuttonClick(sender:)), for: .touchUpInside)
         tmpBtnRight.frame = CGRect.init(x: 0, y: 0, width: 44, height: 44)
-        tmpBtnRight.imageEdgeInsets = UIEdgeInsets.init(top: 12, left: 8, bottom: 8, right: 8)
+        tmpBtnRight.imageEdgeInsets = UIEdgeInsets.init(top: 12, left: 12, bottom: 12, right: 12)
         rightBtn = UIBarButtonItem.init(customView: tmpBtnRight)
+        self.navigationItem.rightBarButtonItem = rightBtn;
+
         
     }
     
@@ -149,18 +151,20 @@ class ViewController: UIViewController {
     
     //MARK: event
     @objc func rightBarbuttonClick(sender:UIBarButtonItem) {
+        
+        
+        print("right")
+        let todos = controllerState?.todos
+//        TodoStore.default.dispatch(action: .saveToStorage(type: .fileMgr, todos: todos!)) //tested succeed
+        TodoStore.default.dispatch(action: .saveToStorage(type: .keychain, todos: todos!))
+    }
+    
+    @objc func leftButtonClick(sender:UIBarButtonItem){
         print("yes?")
         
         let todo = Todo.init(id: UUID().uuidString, versions: [], contents: "", state: 0, isEdit: true)
         TodoStore.default.dispatch(action:.adding(todo: todo))
         TodoStore.default.dispatch(action: .editingRowComplete(index: 0))
-        
-    }
-    
-    @objc func leftButtonClick(sender:UIBarButtonItem){
-        print("right")
-        let todos = controllerState?.todos
-        TodoStore.default.dispatch(action: .saveToStorage(type: .fileMgr, todos: todos!))
     }
     
 }

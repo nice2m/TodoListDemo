@@ -22,7 +22,7 @@
 		7764386922C4708900AA3A6F /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7764386822C4708900AA3A6F /* Store.swift */; };
 		7764386D22C493FB00AA3A6F /* TodoConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7764386C22C493FB00AA3A6F /* TodoConst.swift */; };
 		7764387122C4951A00AA3A6F /* TodoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7764387022C4951A00AA3A6F /* TodoCell.swift */; };
-		77DEFB3022D2DBA1007D2647 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776E1D8522D2D79300B02BD8 /* NotificationCenter.framework */; };
+		77DEFB3022D2DBA1007D2647 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 776E1D8522D2D79300B02BD8 /* NotificationCenter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		77DEFB3322D2DBA1007D2647 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DEFB3222D2DBA1007D2647 /* TodayViewController.swift */; };
 		77DEFB3622D2DBA1007D2647 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77DEFB3422D2DBA1007D2647 /* MainInterface.storyboard */; };
 		77DEFB3A22D2DBA1007D2647 /* TodoListToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 77DEFB2F22D2DBA1007D2647 /* TodoListToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };

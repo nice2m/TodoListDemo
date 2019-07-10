@@ -70,7 +70,7 @@ public struct ViewControllerState {
             print("")
         case .saveToStorage(let type, let todos):
             let rt = Todo.saveToLocal(data: todos, type: type)
-            print("type:saveToStorage result:\(rt)")
+            print("type:\(type) result:\(rt)")
         }
         
         return ViewControllerState.init(todos: TodoStore.default.todos, isLoading: isLoading, isEditing: isEditing, title: "TodoList-\(TodoStore.default.todos.count)")
