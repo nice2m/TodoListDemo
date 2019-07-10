@@ -30,9 +30,9 @@ class TodoStore {
 
     }
     
-    func dispatch(event:TodoEvent){
+    func dispatch(action:ViewControllerAction){
         let oldState = self.state
-        self.state = ViewControllerState.reduce(state: oldState!, event: event)
+        self.state = ViewControllerState.reduce(state: oldState!, action: action)
         _publish(oldState: oldState!, state: self.state)
     }
     
@@ -52,5 +52,11 @@ class TodoStore {
             observer(oldState,state)
         }
     }
+    
+}
+
+
+// 存取数据
+extension TodoStore {
     
 }

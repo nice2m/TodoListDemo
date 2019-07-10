@@ -4,10 +4,9 @@ PODS:
   - Hue (5.0.0)
   - KeychainAccess (3.2.0)
   - Kingfisher (5.5.0)
-  - Permission (2.0.4):
-    - Permission/Core (= 2.0.4)
-  - Permission/Core (2.0.4)
+  - Nimble (8.0.2)
   - PromiseKit/CorePromise (6.8.4)
+  - Quick (2.1.0)
   - SnapKit (5.0.0)
   - SwiftyJSON (4.3.0)
 
@@ -17,8 +16,9 @@ DEPENDENCIES:
   - Hue
   - KeychainAccess
   - Kingfisher (~> 5.0)
-  - Permission
+  - Nimble
   - PromiseKit/CorePromise (~> 6.8)
+  - Quick
   - SnapKit (~> 5.0.0)
   - SwiftyJSON (~> 4.0)
 
@@ -29,8 +29,9 @@ SPEC REPOS:
     - Hue
     - KeychainAccess
     - Kingfisher
-    - Permission
+    - Nimble
     - PromiseKit
+    - Quick
     - SnapKit
     - SwiftyJSON
 
@@ -40,11 +41,12 @@ SPEC CHECKSUMS:
   Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
   Kingfisher: 6fe5e67a90fd335e49b0f5c075ff55ac5ebedd94
-  Permission: 6853b9694e66a6c9197468c66d1935c3629cbf9c
+  Nimble: 622629381bda1dd5678162f21f1368cec7cbba60
   PromiseKit: 51794a832647e7b819336dc2279039ce9f1cc49b
+  Quick: 4be43f6634acfa727dd106bdf3929ce125ffa79d
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 506f24ff28f064e9d36412a879266beb829f3d77
+PODFILE CHECKSUM: 85660452a3e17b5d63e45d1cb4c1589e52a6b468
 
 COCOAPODS: 1.6.1

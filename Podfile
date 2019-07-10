@@ -14,16 +14,26 @@ target 'TodoListDemo' do
   pod 'CryptoSwift'
   pod 'KeychainAccess'
   pod 'PromiseKit/CorePromise', '~> 6.8'
-  pod 'Permission'
+  #pod 'Permission', :git => 'https://github.com/evdeve/Permission'
 
+  
+  def testing_pods
+   # Pods for testing
+   pod 'Quick'
+   pod 'Nimble'
+  end
+  
   target 'TodoListDemoTests' do
-    inherit! :search_paths
-    # Pods for testing
+    testing_pods
   end
 
   target 'TodoListDemoUITests' do
-    inherit! :search_paths
-    # Pods for testing
+    testing_pods
+  end
+  
+  target 'TodoListToday' do
+    # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+    testing_pods
   end
 
 end

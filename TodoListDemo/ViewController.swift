@@ -11,8 +11,11 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    lazy var table:UITableView = UITableView.init(frame: .zero, style: .grouped)
-    lazy var rightBtn:UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .add, target: self, action: #selector(rightBarbuttonClick(sender:)))
+    let localDataMgr = TodoLocalDataManager.shared
+    
+    var table:UITableView = UITableView.init(frame: .zero, style: .grouped)
+    var rightBtn:UIBarButtonItem!
+    var leftBtn:UIBarButtonItem!
     let cellReuseID = "TodoCell"
     
     var controllerState:ViewControllerState?{
@@ -31,6 +34,37 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         configSubview()
         configObserver()
+        //testLoalDataManager_userDefaultsFetchAndStore()
+        
+    }
+//    func testLoalDataManager_userDefaultsFetchAndStore() {
+//
+//        let tmpData = generateTestData()
+//        let storeRt = localDataMgr.storeData(type: .userDefaults, with: tmpData)
+//        assert(storeRt, "userDefaults 写入 data 失败")
+//        let fetchData = localDataMgr.fetchData(type: .userDefaults)
+//
+//        for i in 0..<tmpData.count
+//        {
+//            print("id1 \t\(tmpData[i].id)")
+//            print("id2 \t\(fetchData[i].id)")
+//
+//        }
+//    }
+    
+    func generateTestData()->[Todo]{
+        var storeData = [Todo]()
+        
+        for i in 0..<5 {
+            let id = UUID.init().uuidString
+            let contents = String(format: "contents-%d", i)
+            let state = 0
+            let isEdit = false
+            let version = [""]
+            
+            storeData.append(Todo.init(id: id, versions: version, contents: contents, state: state, isEdit: isEdit))
+        }
+        return storeData
     }
 
     //MARK: Private
@@ -40,23 +74,38 @@ class ViewController: UIViewController {
         let _ = TodoStore.default.subscribe { [weak self](oldState, newState) in
             self?.controllerState = newState
         }
-        TodoStore.default.dispatch(event: .editingRowComplete(index: 0))
+        TodoStore.default.dispatch(action: .editingRowComplete(index: 0))
         
     }
     
     func configSubview() {
         
         title = "TodoList"
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.kTheamColor]
         table.delegate = self
         table.dataSource = self
         
         view .addSubview(table)
         edgesForExtendedLayout = UIRectEdge.init(rawValue: 0)
-        self.navigationItem.rightBarButtonItem = rightBtn;
         
         table.contentInsetAdjustmentBehavior = .never
         table.frame = CGRect.init(x: 0, y: 0, width:TodoGlobal.screenWidth, height: TodoGlobal.screenHeight - TodoGlobal.barHeight)
         table.register(TodoCell.self, forCellReuseIdentifier: cellReuseID)
+        
+        let tmpBtn = UIButton.init(type: .custom)
+        tmpBtn.setImage(UIImage.init(named: "add_icon"), for: .normal)
+        tmpBtn .addTarget(self, action: #selector(rightBarbuttonClick(sender:)), for: .touchUpInside)
+        tmpBtn.frame = CGRect.init(x: 0, y: 0, width: 44, height: 44)
+        tmpBtn.imageEdgeInsets = UIEdgeInsets.init(top: 12, left: 8, bottom: 8, right: 8)
+        rightBtn = UIBarButtonItem.init(customView: tmpBtn)
+        self.navigationItem.rightBarButtonItem = rightBtn;
+
+        let tmpBtnRight = UIButton.init(type: .custom)
+        tmpBtnRight.setImage(UIImage.init(named: "ok_icon"), for: .normal)
+        tmpBtnRight .addTarget(self, action: #selector(rightBarbuttonClick(sender:)), for: .touchUpInside)
+        tmpBtnRight.frame = CGRect.init(x: 0, y: 0, width: 44, height: 44)
+        tmpBtnRight.imageEdgeInsets = UIEdgeInsets.init(top: 12, left: 8, bottom: 8, right: 8)
+        rightBtn = UIBarButtonItem.init(customView: tmpBtnRight)
         
     }
     
@@ -82,14 +131,14 @@ class ViewController: UIViewController {
             if (isDone)
             {
                 let todo = Todo.init(id: UUID().uuidString, versions: [], contents: aCell.textEdit?.text ?? "空", state: 0, isEdit: false)
-                TodoStore.default.dispatch(event: .replace(todo: todo, atIndex: 0))
+                TodoStore.default.dispatch(action: .replace(todo: todo, atIndex: 0))
                 
             }
             else
             {
-                TodoStore.default.dispatch(event: .delete(index: 0))
+                TodoStore.default.dispatch(action: .delete(index: 0))
             }
-            TodoStore.default.dispatch(event: .editingRowComplete(index: 0))
+            TodoStore.default.dispatch(action: .editingRowComplete(index: 0))
         }
         
     }
@@ -103,9 +152,15 @@ class ViewController: UIViewController {
         print("yes?")
         
         let todo = Todo.init(id: UUID().uuidString, versions: [], contents: "", state: 0, isEdit: true)
-        TodoStore.default.dispatch(event:.adding(todo: todo))
-        TodoStore.default.dispatch(event: .editingRowComplete(index: 0))
+        TodoStore.default.dispatch(action:.adding(todo: todo))
+        TodoStore.default.dispatch(action: .editingRowComplete(index: 0))
         
+    }
+    
+    @objc func leftButtonClick(sender:UIBarButtonItem){
+        print("right")
+        let todos = controllerState?.todos
+        TodoStore.default.dispatch(action: .saveToStorage(type: .fileMgr, todos: todos!))
     }
     
 }
@@ -124,15 +179,15 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource
         var actions = [UITableViewRowAction]()
         let actionA = UITableViewRowAction.init(style: .default, title: "O") { (action, indexpath) in
             //
-            TodoStore.default.dispatch(event: .editingRowComplete(index: 0))
+            TodoStore.default.dispatch(action: .editingRowComplete(index: 0))
 
         }
         actions.append(actionA)
         
         actions.append(UITableViewRowAction.init(style: .default, title: "X", handler: { (action, indexPath) in
             print("action:\(action)\n\nindexPath:\(indexPath)")
-            TodoStore.default.dispatch(event: .delete(index: indexPath.row))
-            TodoStore.default.dispatch(event: .editingRowComplete(index: 0))
+            TodoStore.default.dispatch(action: .delete(index: indexPath.row))
+            TodoStore.default.dispatch(action: .editingRowComplete(index: 0))
         }))
         return actions;
     }
